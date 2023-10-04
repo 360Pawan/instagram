@@ -1,18 +1,25 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const stack = createNativeStackNavigator();
+import SignIn from './screens/SignIn';
+import SignUp from './screens/SignUp';
+import Home from './screens/Home';
+import AddPost from './screens/AddPost';
+
+const Stack = createNativeStackNavigator();
 
 function App(): JSX.Element {
   return (
     <NavigationContainer>
-      <Text style={styles.text}>Hola</Text>
+      <Stack.Navigator initialRouteName="SignIn">
+        <Stack.Screen name="SignIn" component={SignIn} />
+        <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="AddPost" component={AddPost} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({text: {fontSize: 20}});
 
 export default App;
