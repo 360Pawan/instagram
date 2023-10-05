@@ -1,25 +1,15 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Provider} from 'react-redux';
 
-import SignIn from './screens/SignIn';
-import SignUp from './screens/SignUp';
-import Home from './screens/Home';
-import AddPost from './screens/AddPost';
+import Routes from './router/routes';
+import {store} from './store/store';
 
-const Stack = createNativeStackNavigator();
-
-function App(): JSX.Element {
+const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignIn">
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="AddPost" component={AddPost} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <Routes />
+    </Provider>
   );
-}
+};
 
 export default App;
