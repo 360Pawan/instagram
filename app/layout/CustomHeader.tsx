@@ -1,7 +1,9 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
-const Header = () => {
+const CustomHeader = props => {
+  console.log(props);
+
   return (
     <View>
       <Text>Header</Text>
@@ -9,6 +11,6 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default CustomHeader;
 
 const styles = StyleSheet.create({});

@@ -6,13 +6,16 @@ import SignIn from '@app/screens/SignIn';
 import SignUp from '@app/screens/SignUp';
 import Home from '@app/screens/Home';
 import AddPost from '@app/screens/AddPost';
+import CustomHeader from '@app/layout/CustomHeader';
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignIn">
+      <Stack.Navigator
+        initialRouteName="SignIn"
+        screenOptions={{header: CustomHeader}}>
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
         <Stack.Screen name="Home" component={Home} />
