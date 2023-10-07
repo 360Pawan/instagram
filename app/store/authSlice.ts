@@ -1,22 +1,49 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import auth from '@react-native-firebase/auth';
+import Snackbar from 'react-native-snackbar';
 
-type AuthType = {
-  user: string;
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
 };
 
-const initialState: AuthType = {
-  user: 'Pawan',
+type Auth = {
+  user: User | null;
+};
+
+const initialState: Auth = {
+  user: null,
 };
 
 const AuthSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<string>) {
-      state.user = action.payload;
+    signInUser(
+      state,
+      action: PayloadAction<{email: string; password: string}>,
+    ) {
+      console.log(action.payload);
+
+      auth()
+        .createUserWithEmailAndPassword(
+          'jane.doe@example.com',
+          'SuperSecretPassword!',
+        )
+        .then()
+        .catch(error => {
+          console.log(error);
+
+          Snackbar.show({
+            text: 'Error creating user',
+            backgroundColor: '#FF8080',
+          });
+        });
     },
   },
 });
 
-export const {setUser} = AuthSlice.actions;
+export const {signInUser} = AuthSlice.actions;
 export default AuthSlice.reducer;
