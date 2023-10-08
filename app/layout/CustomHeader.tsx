@@ -5,7 +5,18 @@ import {useSelector} from 'react-redux';
 
 import {RootState} from '@app/store/store';
 
-const CustomHeader = () => {
+const CustomHeader = ({
+  navigation,
+  route,
+}: {
+  navigation?: {navigate: (routeName: string) => void};
+  route?: {
+    key: string;
+    name: string;
+    params: string;
+    path?: undefined;
+  };
+}) => {
   const {user} = useSelector((state: RootState) => state.auth);
 
   return (
@@ -21,9 +32,13 @@ const CustomHeader = () => {
               <Icon name="logout" size={20} />
             </TouchableOpacity>
           </>
-        ) : (
-          <TouchableOpacity>
+        ) : route?.name === 'SignIn' ? (
+          <TouchableOpacity onPress={() => navigation?.navigate('SignUp')}>
             <Text style={styles.text}>Sign Up</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={() => navigation?.navigate('SignIn')}>
+            <Text style={styles.text}>Sign In</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -35,8 +50,7 @@ export default CustomHeader;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#FF8080',
