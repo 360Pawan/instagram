@@ -45,7 +45,53 @@ export const signUpUser = async ({
         backgroundColor: '#FF8080',
       });
     }
-  }
 
-  return null;
+    return null;
+  }
+};
+
+export const signInUser = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  try {
+    const {user} = await auth().signInWithEmailAndPassword(email, password);
+
+    const userDetails = await firebase
+      .app()
+      .database(
+        'https://instagram-1aa92-default-rtdb.asia-southeast1.firebasedatabase.app/',
+      )
+      .ref(`/users/${user.uid}`)
+      .once('value', snapshot => snapshot.val());
+
+    return {id: user.uid, ...userDetails.val()};
+  } catch (error: any) {
+    if (error.code === 'auth/invalid-login') {
+      Snackbar.show({
+        text: 'Invalid credential.',
+        backgroundColor: '#FF8080',
+      });
+    }
+
+    return null;
+  }
+};
+
+export const signOutUser = async () => {
+  try {
+    await auth().signOut();
+
+    return true;
+  } catch (error) {
+    Snackbar.show({
+      text: 'Error signing out user!',
+      backgroundColor: '#FF8080',
+    });
+
+    return false;
+  }
 };

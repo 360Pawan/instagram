@@ -1,9 +1,11 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {RootState} from '@app/store/store';
+import {signOutUser} from '@app/utils/auth';
+import {setUser} from '@app/store/authSlice';
 
 const CustomHeader = ({
   navigation,
@@ -17,20 +19,31 @@ const CustomHeader = ({
     path?: undefined;
   };
 }) => {
+  const dispatch = useDispatch();
   const {user} = useSelector((state: RootState) => state.auth);
 
-  console.log(user);
+  const signOut = async () => {
+    const signedOut = await signOutUser();
+
+    if (signedOut) {
+      dispatch(setUser(null));
+      navigation?.navigate('SignIn');
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Instagram</Text>
+      <TouchableOpacity
+        onPress={() => (user ? navigation?.navigate('Home') : null)}>
+        <Text style={styles.text}>Instagram</Text>
+      </TouchableOpacity>
       <View style={styles.actions}>
         {user ? (
           <>
             <TouchableOpacity onPress={() => navigation?.navigate('AddPost')}>
               <Text style={styles.text}>Add Post</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={signOut}>
               <Icon name="logout" size={20} />
             </TouchableOpacity>
           </>

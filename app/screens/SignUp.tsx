@@ -1,6 +1,12 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 
 import Input from '@app/components/Input';
 import PrimaryButton from '@app/components/Button';
@@ -20,6 +26,7 @@ const SignUp = ({
     email: '',
     password: '',
   });
+  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async () => {
     if (
@@ -33,12 +40,20 @@ const SignUp = ({
       });
     }
 
+    setLoading(true);
+
     try {
       const user = await signUpUser(signUpDetails);
 
       dispatch(setUser(user));
-      navigation?.navigate('Home');
+
+      if (user) {
+        navigation?.navigate('Home');
+        setSignUpDetails({email: '', name: '', password: ''});
+        setLoading(false);
+      }
     } catch (error) {
+      setLoading(false);
       Snackbar.show({
         text: 'Error creating user',
         backgroundColor: '#FF8080',
@@ -75,7 +90,11 @@ const SignUp = ({
             setSignUpDetails({...signUpDetails, password: text})
           }
         />
-        <PrimaryButton title="Sign Up" onPress={handleSignUp} />
+        {loading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <PrimaryButton title="Sign Up" onPress={handleSignUp} />
+        )}
       </View>
     </ScrollView>
   );

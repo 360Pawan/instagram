@@ -1,18 +1,30 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 
 import Input from '@app/components/Input';
 import PrimaryButton from '@app/components/Button';
 import Snackbar from 'react-native-snackbar';
-import {signInUser} from '@app/store/authSlice';
+import {signInUser} from '@app/utils/auth';
+import {setUser} from '@app/store/authSlice';
 
-const SignIn = () => {
+const SignIn = ({
+  navigation,
+}: {
+  navigation?: {navigate: (routeName: string) => void};
+}) => {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
   const [signInDetails, setSignInDetails] = useState({email: '', password: ''});
 
-  const handleSignIn = () => {
+  const handleSignIn = async () => {
     if (!signInDetails.email || !signInDetails.password) {
       return Snackbar.show({
         text: 'Both fields are required',
@@ -20,7 +32,24 @@ const SignIn = () => {
       });
     }
 
-    dispatch(signInUser(signInDetails));
+    setLoading(true);
+
+    try {
+      const user = await signInUser(signInDetails);
+
+      dispatch(setUser(user));
+
+      if (user) {
+        navigation?.navigate('Home');
+        setSignInDetails({email: '', password: ''});
+        setLoading(false);
+      }
+    } catch (error) {
+      Snackbar.show({
+        text: 'Error signing user',
+        backgroundColor: '#FF8080',
+      });
+    }
   };
 
   return (
@@ -43,7 +72,11 @@ const SignIn = () => {
             setSignInDetails({...signInDetails, password: text})
           }
         />
-        <PrimaryButton title="Sign In" onPress={handleSignIn} />
+        {loading ? (
+          <ActivityIndicator size="large" />
+        ) : (
+          <PrimaryButton title="Sign In" onPress={handleSignIn} />
+        )}
       </View>
     </ScrollView>
   );

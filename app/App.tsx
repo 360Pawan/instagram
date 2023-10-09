@@ -13,3 +13,7 @@ const App = () => {
 };
 
 export default App;
+
+{
+  /* <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> */
+}
