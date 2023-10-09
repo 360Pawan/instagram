@@ -19,13 +19,15 @@ const CustomHeader = ({
 }) => {
   const {user} = useSelector((state: RootState) => state.auth);
 
+  console.log(user);
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Instagram</Text>
       <View style={styles.actions}>
         {user ? (
           <>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation?.navigate('AddPost')}>
               <Text style={styles.text}>Add Post</Text>
             </TouchableOpacity>
             <TouchableOpacity>

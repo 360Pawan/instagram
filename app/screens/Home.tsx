@@ -1,10 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import React from 'react';
 
-const Home = () => {
+const Home = ({
+  navigation,
+}: {
+  navigation?: {navigate: (routeName: string) => void};
+}) => {
   return (
     <View>
       <Text>Hello from Home Screen</Text>
+      <TouchableOpacity onPress={() => navigation?.navigate('AddPost')}>
+        <Text>Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 };

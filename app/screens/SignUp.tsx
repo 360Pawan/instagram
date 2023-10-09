@@ -5,9 +5,14 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import Input from '@app/components/Input';
 import PrimaryButton from '@app/components/Button';
 import Snackbar from 'react-native-snackbar';
-import {signUpUser} from '@app/store/authSlice';
+import {signUpUser} from '@app/utils/auth';
+import {setUser} from '@app/store/authSlice';
 
-const SignUp = () => {
+const SignUp = ({
+  navigation,
+}: {
+  navigation?: {navigate: (routeName: string) => void};
+}) => {
   const dispatch = useDispatch();
 
   const [signUpDetails, setSignUpDetails] = useState({
@@ -16,7 +21,7 @@ const SignUp = () => {
     password: '',
   });
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     if (
       !signUpDetails.name ||
       !signUpDetails.email ||
@@ -28,11 +33,23 @@ const SignUp = () => {
       });
     }
 
-    dispatch(signUpUser(signUpDetails));
+    try {
+      const user = await signUpUser(signUpDetails);
+
+      dispatch(setUser(user));
+      navigation?.navigate('Home');
+    } catch (error) {
+      Snackbar.show({
+        text: 'Error creating user',
+        backgroundColor: '#FF8080',
+      });
+    }
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled">
       <View>
         <Text style={styles.text}>Sign up for a new account</Text>
       </View>
