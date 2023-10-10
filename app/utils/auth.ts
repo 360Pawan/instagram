@@ -20,9 +20,9 @@ export const signUpUser = async ({
         'https://instagram-1aa92-default-rtdb.asia-southeast1.firebasedatabase.app/',
       )
       .ref(`/users/${user.uid}`)
-      .set({name: name, email: email});
+      .set({name, email});
 
-    return {id: user.uid, name: name, email: user.email};
+    return {id: user.uid, name, email: user.email};
   } catch (error: any) {
     if (error.code === 'auth/email-already-in-use') {
       Snackbar.show({
@@ -76,15 +76,24 @@ export const signInUser = async ({
 };
 
 export const fetchCurrentUser = async (id: string) => {
-  const userDetails = await firebase
-    .app()
-    .database(
-      'https://instagram-1aa92-default-rtdb.asia-southeast1.firebasedatabase.app/',
-    )
-    .ref(`/users/${id}`)
-    .once('value', snapshot => snapshot.val());
+  try {
+    const userDetails = await firebase
+      .app()
+      .database(
+        'https://instagram-1aa92-default-rtdb.asia-southeast1.firebasedatabase.app/',
+      )
+      .ref(`/users/${id}`)
+      .once('value', snapshot => snapshot.val());
 
-  return {id: id, ...userDetails.val()};
+    return {id: id, ...userDetails.val()};
+  } catch (error: any) {
+    Snackbar.show({
+      text: 'Error fetching user.',
+      backgroundColor: '#FF8080',
+    });
+
+    return null;
+  }
 };
 
 export const signOutUser = async () => {

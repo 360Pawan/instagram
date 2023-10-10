@@ -19,8 +19,13 @@ import {
 } from 'react-native-image-picker';
 import Snackbar from 'react-native-snackbar';
 
-const AddPost = () => {
+const AddPost = ({
+  navigation,
+}: {
+  navigation?: {navigate: (routeName: string) => void};
+}) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
   const [postDetails, setPostDetails] = useState({
     image: '',
     location: '',
@@ -86,10 +91,20 @@ const AddPost = () => {
         backgroundColor: '#FF8080',
       });
     }
+    setIsDisabled(true);
 
-    console.log(postDetails);
-
-    await addPost(postDetails);
+    try {
+      await addPost(postDetails);
+      setPostDetails({image: '', location: '', description: ''});
+      setIsDisabled(false);
+      navigation?.navigate('Home');
+    } catch (error) {
+      setIsDisabled(false);
+      Snackbar.show({
+        text: 'Error uploading post.',
+        backgroundColor: '#FF8080',
+      });
+    }
   };
 
   return (
@@ -136,7 +151,11 @@ const AddPost = () => {
           setPostDetails({...postDetails, description: text})
         }
       />
-      <PrimaryButton title="Add post" onPress={uploadPost} />
+      <PrimaryButton
+        title="Add post"
+        onPress={uploadPost}
+        disabled={isDisabled}
+      />
     </ScrollView>
   );
 };

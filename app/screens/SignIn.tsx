@@ -42,9 +42,11 @@ const SignIn = ({
       if (userDetails) {
         navigation?.navigate('Home');
         setSignInDetails({email: '', password: ''});
-        setLoading(false);
       }
+
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       Snackbar.show({
         text: 'Error signing user',
         backgroundColor: '#FF8080',

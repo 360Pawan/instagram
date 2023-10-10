@@ -4,12 +4,17 @@ import React from 'react';
 const PrimaryButton = ({
   title,
   onPress,
+  disabled,
 }: {
   title: string;
   onPress: () => void;
+  disabled?: boolean;
 }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={onPress}
+      disabled={disabled}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
