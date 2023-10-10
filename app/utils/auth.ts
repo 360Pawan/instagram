@@ -60,15 +60,9 @@ export const signInUser = async ({
   try {
     const {user} = await auth().signInWithEmailAndPassword(email, password);
 
-    const userDetails = await firebase
-      .app()
-      .database(
-        'https://instagram-1aa92-default-rtdb.asia-southeast1.firebasedatabase.app/',
-      )
-      .ref(`/users/${user.uid}`)
-      .once('value', snapshot => snapshot.val());
+    const userDetails = await fetchCurrentUser(user.uid);
 
-    return {id: user.uid, ...userDetails.val()};
+    return userDetails;
   } catch (error: any) {
     if (error.code === 'auth/invalid-login') {
       Snackbar.show({
@@ -79,6 +73,18 @@ export const signInUser = async ({
 
     return null;
   }
+};
+
+export const fetchCurrentUser = async (id: string) => {
+  const userDetails = await firebase
+    .app()
+    .database(
+      'https://instagram-1aa92-default-rtdb.asia-southeast1.firebasedatabase.app/',
+    )
+    .ref(`/users/${id}`)
+    .once('value', snapshot => snapshot.val());
+
+  return {id: id, ...userDetails.val()};
 };
 
 export const signOutUser = async () => {

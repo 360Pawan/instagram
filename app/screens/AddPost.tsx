@@ -1,5 +1,6 @@
 import PrimaryButton from '@app/components/Button';
 import Input from '@app/components/Input';
+import {addPost} from '@app/utils/post';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -74,7 +75,7 @@ const AddPost = () => {
     });
   };
 
-  const addPost = async () => {
+  const uploadPost = async () => {
     if (
       !postDetails.description ||
       !postDetails.image ||
@@ -87,6 +88,8 @@ const AddPost = () => {
     }
 
     console.log(postDetails);
+
+    await addPost(postDetails);
   };
 
   return (
@@ -133,7 +136,7 @@ const AddPost = () => {
           setPostDetails({...postDetails, description: text})
         }
       />
-      <PrimaryButton title="Add post" onPress={addPost} />
+      <PrimaryButton title="Add post" onPress={uploadPost} />
     </ScrollView>
   );
 };

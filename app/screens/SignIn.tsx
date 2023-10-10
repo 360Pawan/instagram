@@ -7,10 +7,10 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 import Input from '@app/components/Input';
 import PrimaryButton from '@app/components/Button';
-import Snackbar from 'react-native-snackbar';
 import {signInUser} from '@app/utils/auth';
 import {setUser} from '@app/store/authSlice';
 
@@ -35,11 +35,11 @@ const SignIn = ({
     setLoading(true);
 
     try {
-      const user = await signInUser(signInDetails);
+      const userDetails = await signInUser(signInDetails);
 
-      dispatch(setUser(user));
+      dispatch(setUser(userDetails));
 
-      if (user) {
+      if (userDetails) {
         navigation?.navigate('Home');
         setSignInDetails({email: '', password: ''});
         setLoading(false);
