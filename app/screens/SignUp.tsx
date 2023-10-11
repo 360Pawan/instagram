@@ -7,12 +7,12 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 import Input from '@app/components/Input';
-import PrimaryButton from '@app/components/Button';
-import Snackbar from 'react-native-snackbar';
 import {signUpUser} from '@app/utils/auth';
 import {setUser} from '@app/store/authSlice';
+import PrimaryButton from '@app/components/Button';
 
 const SignUp = ({
   navigation,

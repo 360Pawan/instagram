@@ -2,6 +2,7 @@ import {nanoid} from 'nanoid';
 import {firebase} from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import 'react-native-get-random-values';
+
 import {fetchCurrentUser} from './auth';
 
 export const addPost = async ({

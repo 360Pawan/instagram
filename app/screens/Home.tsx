@@ -1,22 +1,14 @@
-import {StyleSheet, FlatList, Text} from 'react-native';
 import React, {useCallback, useEffect} from 'react';
-import Post from '@app/components/Post';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {fetchPosts} from '@app/utils/post';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import {StyleSheet, FlatList, Text} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+
+import Post from '@app/components/Post';
+import {fetchPosts} from '@app/utils/post';
 import {RootState} from '@app/store/store';
 import {setPosts} from '@app/store/postSlice';
-
-type Post = {
-  author: string;
-  authorId: string;
-  description: string;
-  imageUrl: string;
-  location: string;
-  id: string;
-  likes: string[];
-};
+import {PostType} from '@app/types/auth';
 
 const Home = () => {
   const isFocused = useIsFocused();
@@ -29,7 +21,7 @@ const Home = () => {
       return;
     }
 
-    const data: Post[] = Object.values(response);
+    const data: PostType[] = Object.values(response);
     dispatch(setPosts(data));
   }, [dispatch]);
 

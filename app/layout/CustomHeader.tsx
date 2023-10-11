@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {useDispatch, useSelector} from 'react-redux';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 import {RootState} from '@app/store/store';
 import {signOutUser} from '@app/utils/auth';

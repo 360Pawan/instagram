@@ -1,6 +1,3 @@
-import PrimaryButton from '@app/components/Button';
-import Input from '@app/components/Input';
-import {addPost} from '@app/utils/post';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -18,6 +15,10 @@ import {
   MediaType,
 } from 'react-native-image-picker';
 import Snackbar from 'react-native-snackbar';
+
+import Input from '@app/components/Input';
+import {addPost} from '@app/utils/post';
+import PrimaryButton from '@app/components/Button';
 
 const AddPost = ({
   navigation,

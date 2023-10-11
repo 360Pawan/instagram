@@ -1,6 +1,6 @@
 import auth from '@react-native-firebase/auth';
-import {firebase} from '@react-native-firebase/database';
 import Snackbar from 'react-native-snackbar';
+import {firebase} from '@react-native-firebase/database';
 
 export const signUpUser = async ({
   name,

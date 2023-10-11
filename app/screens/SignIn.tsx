@@ -10,9 +10,9 @@ import {
 import Snackbar from 'react-native-snackbar';
 
 import Input from '@app/components/Input';
-import PrimaryButton from '@app/components/Button';
 import {signInUser} from '@app/utils/auth';
 import {setUser} from '@app/store/authSlice';
+import PrimaryButton from '@app/components/Button';
 
 const SignIn = ({
   navigation,

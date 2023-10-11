@@ -2,8 +2,9 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
-import {RootState} from '@app/store/store';
+
 import {likePost} from '@app/utils/post';
+import {RootState} from '@app/store/store';
 
 const Post = ({
   author,
