@@ -55,6 +55,8 @@ Now that you have successfully run the app, let's modify it.
 
    For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
 
+## Step 4: Add firebase to project use this guide [Firebase guide](https://rnfirebase.io/).
+
 ## Congratulations! :tada:
 
 You've successfully run and modified your React Native App. :partying_face:
